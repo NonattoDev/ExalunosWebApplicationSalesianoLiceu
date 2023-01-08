@@ -1,17 +1,17 @@
-const express = require("express");
-
 const ExAlunos = require("../models/ExAlunos.js");
 const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
-const exalunoRouter = require("../routes/exalunoRouter.js");
 
 module.exports = class ExAlunoController {
   // FORMULARIO DE CADASTRO GERAL
+  static homePage(req, res) {
+    res.render("homePage");
+  }
   static formExAluno(req, res) {
     res.render("cadastroExAluno");
   }
 
-  // RECEBIMENTO VIA POST DO FORMULARIO
+  // ! RECEBIMENTO VIA POST DO FORMULARIO
   static async formExAlunoSave(req, res) {
     // DADOS DO EX ALUNO
     const ExAlunoCad = {
@@ -68,8 +68,13 @@ module.exports = class ExAlunoController {
       number: req.body.numerocasa,
       ExAlunoId: ExAlunoIdDb.id,
     };
-    await Address.create(AddressExAluno);
-
-    res.redirect("/exalunos/addform");
+    await Address.create(AddressExAluno)
+      .then((result) => {
+        req.flash("message", "Cadastro Concluído com sucesso!");
+        res.render("cadastroConcluido");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 };

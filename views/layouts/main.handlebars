@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="https://bulma.io/css/bulma-docs.min.css?v=202208161652" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="/css\hover-min.css" />
+
     <script src="/src/cep.js"></script>
+
     <script src="/src/scriptFront.js"></script>
-    <script src="/src/EmailVerification.js"></script>
-    <script src="/src/CpfValidator.js"></script>
+
 
 </head>
 
@@ -31,7 +32,31 @@
                 <hr />
             </figure><br />
         </div>
+
+
+
+
+        {{#if messages.erro}}
+        <div class="container">
+            <article class="message is-danger">
+                <div class="message-header">
+                    <p>Ops.. Algo deu errado com a sua solicitação!</p>
+                    <button class="delete" aria-label="delete"></button>
+                </div>
+                <div class="message-body">
+                    {{messages.erro}}
+                </div>
+            </article>
+        </div>
+        {{/if}}
+
+
+
         {{{body}}}
+
+
+
+
 
 
     </section>

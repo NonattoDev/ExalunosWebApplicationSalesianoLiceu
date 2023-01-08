@@ -21,6 +21,7 @@ module.exports = async function checkEmailIsValid(req, res, next) {
   ];
 
   if (!validDomainList.find((x) => x === domainEmailExAluno)) {
+    req.flash("erro", "Verifique o seu email!");
     res.redirect("/exalunos/addform");
   } else {
     next();

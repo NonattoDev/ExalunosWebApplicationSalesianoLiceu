@@ -36,8 +36,11 @@
 
 
 <!--Ínicio Formulario Dados Pessoais-->
+
 <form action="/exalunos/saveform" method="post">
+
     <div class=container id="dadosPessoais">
+
         <div class="content has-text-centered">
             <h1 id="endereço" class="title is-4">Dados Pessoais</h1>
         </div>
@@ -47,7 +50,7 @@
                     <label class="label">Nome Completo</label>
                     <div class="control has-icons-left">
                         <input class="input " type="text" placeholder="Digite seu nome completo." name="nomeExAluno"
-                            id="inputName" oninput="maskName(this)" required>
+                            id="inputName" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-user-alt "></i>
                         </span>
@@ -79,8 +82,8 @@
                 <div class="field">
                     <label class="label">CPF</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input " type="text" placeholder="000.000.000-00" name="cpfExAluno" value
-                            maxlength="11" autocomplete="off" id="inputCPF" required>
+                        <input class="input " type="text" placeholder="000.000.000-00" name="cpfExAluno" maxlength="11"
+                            autocomplete="off" id="inputCPF" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-id-badge"></i>
                         </span>
@@ -121,7 +124,7 @@
                             <i class="fas fa-birthday-cake"></i>
                         </span>
                     </div>
-                    <p class="help is-success">Campo Obrigatório</p>
+                    <p class="help is-success" id="avisoFraseDataDeNascimento">Campo Obrigatório</p>
                 </div>
             </div>
             <div class="column is-0"></div>
@@ -130,8 +133,7 @@
                     <label class="label">Ultimo ano na Instituição</label>
                     <div class="control has-icons-left has-icons-right">
                         <input class="input " type="text" name="dataUltimoAnoInstituiçãoExAluno"
-                            id="dataUltimoAnoInstituição" maxlength="4" oninput="maskDataText(this)" placeholder="0000"
-                            required>
+                            id="dataUltimoAnoInstituição" maxlength="4" placeholder="0000" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-calendar-alt"></i>
                         </span>
@@ -176,7 +178,7 @@
                         <label class="label">Nome Completo</label>
                         <div class="control has-icons-left">
                             <input class="input" type="text" placeholder="Digite o nome completo do acompanhante"
-                                name="nameGuest" id="inputNameAcompanhante" oninput="maskName(this)">
+                                name="nameGuest" id="inputNameAcompanhante">
                             <span class="icon is-small is-left"> <i class="fas fa-user-alt"></i></span>
 
                         </div>
@@ -194,7 +196,7 @@
                         <label class="label">CPF</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input " type="text" placeholder="000.000.000-00" name="cpfGuest" value
-                                maxlength="14" autocomplete="off" id="inputCPFAcompanhante" oninput="maskCPF(this)">
+                                maxlength="14" autocomplete="off" id="inputCPFAcompanhante">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-id-badge"></i>
                             </span>
@@ -285,10 +287,11 @@
 
                 <div class="field is-grouped">
                     <div class="control">
-                        <button type="submit" class="button is-link hvr-grow hvr-shadow" id="enviar">Enviar</button>
+
+                        <input type="submit" class="button is-link hvr-grow hvr-shadow" id="enviar" value="Enviar" />
                     </div>
                     <div class="control">
-                        <a href="/exlunos/addform" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
+                        <a href="/" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
                     </div>
 
                 </div>
