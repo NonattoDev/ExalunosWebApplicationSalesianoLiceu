@@ -1,6 +1,7 @@
 const ExAlunos = require("../models/ExAlunos.js");
 const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
+const dotenv = require("dotenv").config();
 module.exports = class ExAlunoController {
   // FORMULARIO DE LOGIN
   static adminLoginGET(req, res) {
@@ -15,9 +16,10 @@ module.exports = class ExAlunoController {
 
   // RECEBO DADOS DO LOGIN
   static adminLoginPost(req, res) {
+    //Apenas Teste
     const adminLog = {
-      u: "admin",
-      p: "admin",
+      u: process.env.USER,
+      p: process.env.PSWD,
     };
 
     const user = {
