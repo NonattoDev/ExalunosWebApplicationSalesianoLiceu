@@ -1,12 +1,12 @@
 const express = require("express");
-const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
 
 //
 const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const flash = require("express-flash");
+
+//__________________________
+const expressLayouts = require("express-ejs-layouts");
 
 // Database
 const connectionDb = require("./database/server");
@@ -17,23 +17,21 @@ const ExAlunos = require("./models/ExAlunos");
 const Guests = require("./models/Guests");
 
 // Utilitários
-app.use(flash());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set("view engine", "handlebars");
-app.engine("handlebars", engine());
+app.use(expressLayouts);
+app.set("layout", "./layouts/main");
+app.set("view engine", "ejs");
 
-// Set Cookie Parser, Sessions and Flash
-app.use(cookieParser("NotSoSecret"));
+// Sessions
 app.use(
   session({
-    secret: "Something",
+    secret: "mySecret__",
     cookie: {
-      maxAge: 60000,
+      secure: false,
+      maxAge: 300000,
     },
-    resave: true,
-    saveUninitialized: true,
   })
 );
 

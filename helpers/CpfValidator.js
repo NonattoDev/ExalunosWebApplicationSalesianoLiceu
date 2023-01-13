@@ -1,3 +1,5 @@
+const ExAlunos = require("../models/ExAlunos");
+
 module.exports = async function cpfValidator(req, res, next) {
   const strCpf = await req.body.cpfExAluno;
 
@@ -5,7 +7,6 @@ module.exports = async function cpfValidator(req, res, next) {
   var resto;
   soma = 0;
   if (strCpf == "00000000000") {
-    req.flash("erro", "Verifique o seu cpf!");
     res.redirect("/exalunos/addform");
     return false;
   }
@@ -23,7 +24,6 @@ module.exports = async function cpfValidator(req, res, next) {
   }
 
   if (resto != parseInt(strCpf.substring(9, 10))) {
-    req.flash("erro", "Verifique o seu cpf!");
     res.redirect("/exalunos/addform");
     return false;
   }
@@ -42,9 +42,14 @@ module.exports = async function cpfValidator(req, res, next) {
   }
 
   if (resto != parseInt(strCpf.substring(10, 11))) {
-    req.flash("erro", "Verifique o seu cpf!");
     res.redirect("/exalunos/addform");
     return false;
+  }
+
+  const cpfExists = await ExAlunos.findOne({ where: { cpf: strCpf } });
+  if (!cpfExists) {
+    res.redirect("/exalunos/addform");
+    return;
   }
 
   return next();

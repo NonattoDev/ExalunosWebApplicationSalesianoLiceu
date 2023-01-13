@@ -1,0 +1,37 @@
+<div class="container-sm" id="loginContainerForm">
+
+  <% if (err) { %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Opss....! </strong> <%= err %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% } %>
+
+  <form class="row g-3" method="post" action="/admin/login">
+
+
+    <div class="mb-3 row">
+      <label for="staticEmail2" class="label col-sm-1 col-form-label">User Login</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" id="staticEmail2" placeholder="Digite o seu usuario" name="userLogin">
+      </div>
+
+    </div>
+
+    <div class="mb-3 row">
+      <label for="inputPassword2" class="label col-sm-1 col-form-label">Senha</label>
+      <div class="col-sm-4">
+        <input type="password" class=" form-control" id="inputPassword2" placeholder="Password" name="userPassword">
+
+      </div>
+
+    </div>
+
+    <div class="col-sm-2 col-form-label">
+      <button type="submit" class="btn btn-primary mb-3">Acessar</button>
+    </div>
+  </form>
+
+
+
+</div>

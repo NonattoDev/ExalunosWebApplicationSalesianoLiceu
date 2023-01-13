@@ -1,6 +1,7 @@
 const ExAlunos = require("../models/ExAlunos.js");
 const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
+const { validationResult } = require("express-validator");
 
 module.exports = class ExAlunoController {
   // FORMULARIO DE CADASTRO GERAL
@@ -8,11 +9,20 @@ module.exports = class ExAlunoController {
     res.render("homePage");
   }
   static formExAluno(req, res) {
-    res.render("cadastroExAluno");
+    let errors;
+    res.render("cadastroExAluno", { errors: false });
   }
 
   // ! RECEBIMENTO VIA POST DO FORMULARIO
   static async formExAlunoSave(req, res) {
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render("cadastroExAluno", { errors: errors.array() });
+    }
+
+    console.log(errors);
+    console.log("TO aqui");
     // DADOS DO EX ALUNO
     const ExAlunoCad = {
       name: req.body.nomeExAluno,
@@ -25,6 +35,7 @@ module.exports = class ExAlunoController {
       haveGuest: req.body.respostaAcompanhante,
       isPaid: false,
     };
+    console.log(ExAlunoCad);
 
     // VERIFY IF EX ALUNO HAS A GUEST
 

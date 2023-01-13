@@ -1,10 +1,43 @@
 const ExAlunos = require("../models/ExAlunos.js");
 const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
-
 module.exports = class ExAlunoController {
-  // FORMULARIO DE CADASTRO GERAL
+  // FORMULARIO DE LOGIN
   static adminLoginGET(req, res) {
-    res.render("admin/login");
+    if (req.session.login) {
+      let user = req.session.login;
+      res.render("admin/loggedIn", { user: user });
+    } else {
+      let err;
+      res.render("admin/login", { err });
+    }
+  }
+
+  // RECEBO DADOS DO LOGIN
+  static adminLoginPost(req, res) {
+    const adminLog = {
+      u: "admin",
+      p: "admin",
+    };
+
+    const user = {
+      nome: req.body.userLogin,
+      pwd: req.body.userPassword,
+    };
+
+    if (user.nome === adminLog.u && user.pwd === adminLog.p) {
+      // Logado com Sucesso!
+      req.session.login = user.nome;
+      res.redirect("/exalunos/addform");
+    } else {
+      let err;
+      res.render("admin/login", { err: "Usuario ou senha incorretos!" });
+    }
+  }
+
+  // ADMIN DASHBOARD
+  static adminDashBoardGET(req, res) {
+    let user = req.session.login;
+    res.render("admin/dashboard", { user });
   }
 };

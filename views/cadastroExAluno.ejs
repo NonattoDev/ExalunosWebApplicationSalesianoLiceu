@@ -1,0 +1,287 @@
+<!--Ínicio Formulario Dados Pessoais-->
+
+<div class="container">
+  <% if (errors) { %>
+
+  <% errors.forEach(err => { %>
+
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Opss....! </strong> <%= err.msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% }) %>
+  <% } %>
+</div>
+
+
+<form action="/exalunos/saveform" method="post">
+
+  <div class=container id="dadosPessoais">
+
+    <div class="content has-text-centered">
+      <h1 id="endereço" class="title is-4">Dados Pessoais</h1>
+    </div>
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Nome Completo</label>
+          <div class="control has-icons-left">
+            <input class="input " type="text" placeholder="Digite seu nome completo." name="nomeExAluno" id="inputName" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user-alt "></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field ">
+          <label class="label">E-mail</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="email" placeholder="Digite o seu E-mail" name="emailExAluno" id="inputEmail" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope "></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">CPF</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" placeholder="000.000.000-00" name="cpfExAluno" maxlength="11" autocomplete="off" id="inputCPF" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i id="iconCpf" class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">RG</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" placeholder="Digite seu RG" name="rgExAluno" value maxlength="10" id="inputRG" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-card"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Data de Nascimento</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="date" name="dataDeNascimentoExAluno" id="dataNascimento" value="2020-10-13" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-birthday-cake"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Ultimo ano na Instituição</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" name="dataUltimoAnoInstituiçãoExAluno" id="dataUltimoAnoInstituição" maxlength="4" placeholder="0000" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!--Pretende Levar Acompanhante ? -->
+
+    <hr>
+    <div class="control" id="acompanhanteRadio">
+      <label class="label">Pretende levar acompanhante ? </label>
+      <input class="hvr-grow radio" type="radio" name="respostaAcompanhante" id="guestYes" value="true">
+      Sim
+      <input class="hvr-grow radio" type="radio" name="respostaAcompanhante" id="guestNo" value="false" checked>
+      Não
+
+    </div>
+    <hr>
+
+    <!-- ========== Criar form  ========== -->
+
+
+    <div style="display: none;" class="content animate__animated " id="guestForm">
+      <div class="columns ">
+        <div class="column hvr-grow"><label class="label" for="nameGuest">Nome Completo</label>
+          <input type="text" name="nameGuest" id="nameGuest" class="input" placeholder="Digite o nome do seu convidado">
+        </div>
+        <div class="column hvr-grow"><label class="label" for="cpfGuest">CPF</label>
+          <input type="text" name="cpfGuest" id="cpfGuest" class="input" placeholder="Digite o CPF do seu convidado">
+        </div>
+        <div class="column hvr-grow"> <label class="label" for="rgGuest">RG</label>
+          <input type="text" name="rgGuest" id="rgGuest" class="input" placeholder="Digite o RG do seu convidado">
+        </div>
+      </div>
+
+
+
+
+
+      <hr>
+    </div>
+
+
+    <!-- ========== End Section ========== -->
+
+
+
+
+    <!--Ínicio Formulario Dados dos Acompanhantes-->
+    <div hidden class="container" id="dadosAcompanhantes">
+      <div class="content has-text-centered">
+        <h1 id="endereço" class="title is-4">Dados de Acompanhante</h1>
+      </div>
+      <div class="columns ">
+        <div class="column"></div>
+        <div class="column is-6 hvr-grow">
+          <div class="field">
+            <label class="label">Nome Completo</label>
+            <div class="control has-icons-left">
+              <input class="input" type="text" placeholder="Digite o nome completo do acompanhante" name="nameGuest" id="inputNameAcompanhante">
+              <span class="icon is-small is-left"> <i class="fas fa-user-alt"></i></span>
+
+            </div>
+          </div>
+
+
+        </div>
+        <div class="column"></div>
+      </div>
+
+
+      <div class="columns">
+        <div class="column hvr-grow">
+          <div class="field">
+            <label class="label">CPF</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input " type="text" placeholder="000.000.000-00" name="cpfGuest" value maxlength="14" autocomplete="off" id="inputCPFAcompanhante">
+              <span class="icon is-small is-left">
+                <i class="fas fa-id-badge"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas"></i>
+              </span>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="column is-0"></div>
+        <div class="column hvr-grow">
+          <div class="field">
+            <label class="label">RG</label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input " type="text" placeholder="Digite o RG do Acompanhante" name="rgGuest" value maxlength="10" id="inputRGAcompanhante">
+              <span class="icon is-small is-left">
+                <i class="fas fa-id-card"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <!--Fim Formulario Dados dos Acompanhantes-->
+
+
+
+
+
+    <div class=container id="dadosEndereço">
+      <div class="content has-text-left">
+        <div class="control has-icons-right">
+          <h1 id="endereço" class="title is-4">Dados de Endereço</h1>
+        </div>
+        <!-- Inicio do formulario CEP-->
+        <div class="columns">
+          <div class="column hvr-grow">
+            <form method="get" action=".">
+              <label class="label">Código CEP
+                <input class="input " name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);" required />
+              </label>
+            </form>
+
+          </div>
+          <div class="column is-0"></div>
+          <div class="column hvr-grow">
+            <label class="label">Cidade
+              <input class="input " name="cidade" type="text" id="cidade" size="40" required />
+            </label>
+
+
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column hvr-grow">
+            <label class="label">Rua
+              <input class="input " name="rua" type="text" id="rua" size="60" required /></label>
+          </div>
+          <div class="column is-0"></div>
+          <div class="column hvr-grow">
+            <label class="label">Estado
+              <input class="input " name="uf" type="text" id="uf" size="2" required /></label>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column hvr-grow">
+            <label class="label">Bairro
+              <input class="input " name="bairro" type="text" id="bairro" size="40" required /></label>
+          </div>
+          <div class="column is-0"></div>
+          <div class="column hvr-grow">
+            <label class="label">Número
+              <input class="input " name="numerocasa" type="text" id="numerocasa" size="2" required /></label>
+          </div>
+        </div>
+
+
+        <div class="field is-grouped">
+          <div class="control">
+
+            <input type="submit" class="button is-link hvr-grow hvr-shadow" id="enviar" value="Enviar" />
+          </div>
+          <div class="control">
+            <a style="text-decoration: none;" href="/" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
+          </div>
+
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+</form>
