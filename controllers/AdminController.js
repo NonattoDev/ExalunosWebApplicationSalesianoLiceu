@@ -2,15 +2,20 @@ const ExAlunos = require("../models/ExAlunos.js");
 const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
 const dotenv = require("dotenv").config();
+
 module.exports = class ExAlunoController {
   // FORMULARIO DE LOGIN
   static adminLoginGET(req, res) {
     if (req.session.login) {
-      let user = req.session.login;
-      res.render("admin/loggedIn", { user: user });
+      return res.redirect("/admin/dashboard");
     } else {
       let err;
-      res.render("admin/login", { err });
+      let info;
+      return res.render("admin/login", {
+        layout: "layouts/login",
+        err,
+        info,
+      });
     }
   }
 
@@ -23,23 +28,56 @@ module.exports = class ExAlunoController {
     };
 
     const user = {
-      nome: req.body.userLogin,
+      name: "Administrador",
+      log: req.body.userLogin,
       pwd: req.body.userPassword,
     };
 
-    if (user.nome === adminLog.u && user.pwd === adminLog.p) {
+    if (user.log === adminLog.u && user.pwd === adminLog.p) {
       // Logado com Sucesso!
-      req.session.login = user.nome;
-      res.redirect("/exalunos/addform");
+      req.session.login = user.name;
+      return res.redirect("/admin/dashboard");
     } else {
       let err;
-      res.render("admin/login", { err: "Usuario ou senha incorretos!" });
+      return res.render("admin/login", {
+        layout: "layouts/login",
+        err: "Usuario ou senha incorretos!",
+      });
     }
   }
 
   // ADMIN DASHBOARD
-  static adminDashBoardGET(req, res) {
+  static async adminDashBoardGET(req, res) {
+    if (!req.session) {
+      return res.redirect("/admin/login");
+    }
+    const exAlunoData = await ExAlunos.findAll({
+      include: Guests,
+      raw: true,
+    });
+    console.log(exAlunoData);
     let user = req.session.login;
-    res.render("admin/dashboard", { user });
+    return await res.render("admin/dashboard", {
+      layout: "layouts/panel",
+      user,
+      exAlunoData,
+    });
+  }
+
+  static adminLogoutPOST(req, res) {
+    if (req.session) {
+      req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+          return res.status(400).redirect("/");
+        } else {
+          return res.render("admin/login", {
+            layout: "layouts/login",
+            err,
+            info: "você foi deslogado!",
+          });
+        }
+      });
+    }
   }
 };

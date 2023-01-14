@@ -6,14 +6,13 @@ const ExAlunos = require("../models/ExAlunos.js");
 
 const ExAlunoController = require("../controllers/ExAlunoController");
 
-const cpfValidator = require("../helpers/cpfValidator");
 const ExAluno = require("../models/ExAlunos.js");
 
 //Rota para mostrar o formulario de cadastro do exaluno
 router.get("/", ExAlunoController.homePage);
-router.get("/addform", ExAlunoController.formExAluno);
+router.get("/form", ExAlunoController.formExAluno);
 router.post(
-  "/saveform",
+  "/form",
   //Verifications
   body("nomeExAluno", "No seu nome devem haver apenas letras de A - Z").isAlpha(
     "pt-BR",
@@ -37,6 +36,12 @@ router.post(
 
     if (user) {
       return Promise.reject("Email já existe no banco de dados");
+    }
+  }),
+  body("cpfExAluno").custom(async (value) => {
+    const cpf = await ExAluno.findOne({ where: { cpf: value } });
+    if (cpf) {
+      return Promise.reject("CPF já cadastrado no banco de dados!");
     }
   }),
   body("cpfExAluno").custom(async (strCPF) => {

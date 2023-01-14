@@ -1,37 +1,49 @@
-<div class="container-sm" id="loginContainerForm">
+<section class="hero is-fullheight">
 
-  <% if (err) { %>
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Opss....! </strong> <%= err %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  <% } %>
-
-  <form class="row g-3" method="post" action="/admin/login">
+  <div class="hero-body has-text-centered">
 
 
-    <div class="mb-3 row">
-      <label for="staticEmail2" class="label col-sm-1 col-form-label">User Login</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="staticEmail2" placeholder="Digite o seu usuario" name="userLogin">
+    <div class="login">
+      <div class="field">
+        <% if (err != undefined) { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Opss....! </strong> <%= err %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <% } else if (info != undefined) { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>Até mais </strong> <%= info %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+
+
+          <% } %>
+
+        </div>
+
+
+
+
+        <img src="https://www.salesianoaracaju.com/Start/img/favicon.ico" alt="" srcset="">
+        <form method="post" action="/admin/login">
+          <div class="field">
+            <div class="control">
+              <input class="input is-medium is-rounded" type="text" placeholder="Digite o seu usuario" name="userLogin" autocomplete="username" required />
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <input class="input is-medium is-rounded" name="userPassword" type="password" placeholder="**********" autocomplete="current-password" required />
+            </div>
+          </div>
+          <br />
+          <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+            Login
+          </button>
+        </form>
+        <br>
+
       </div>
-
     </div>
-
-    <div class="mb-3 row">
-      <label for="inputPassword2" class="label col-sm-1 col-form-label">Senha</label>
-      <div class="col-sm-4">
-        <input type="password" class=" form-control" id="inputPassword2" placeholder="Password" name="userPassword">
-
-      </div>
-
-    </div>
-
-    <div class="col-sm-2 col-form-label">
-      <button type="submit" class="btn btn-primary mb-3">Acessar</button>
-    </div>
-  </form>
-
-
-
-</div>
+</section>

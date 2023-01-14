@@ -8,6 +8,7 @@ module.exports = class ExAlunoController {
   static homePage(req, res) {
     res.render("homePage");
   }
+
   static formExAluno(req, res) {
     let errors;
     res.render("cadastroExAluno", { errors: false });
@@ -21,8 +22,6 @@ module.exports = class ExAlunoController {
       return res.render("cadastroExAluno", { errors: errors.array() });
     }
 
-    console.log(errors);
-    console.log("TO aqui");
     // DADOS DO EX ALUNO
     const ExAlunoCad = {
       name: req.body.nomeExAluno,
@@ -35,7 +34,6 @@ module.exports = class ExAlunoController {
       haveGuest: req.body.respostaAcompanhante,
       isPaid: false,
     };
-    console.log(ExAlunoCad);
 
     // VERIFY IF EX ALUNO HAS A GUEST
 
@@ -58,11 +56,11 @@ module.exports = class ExAlunoController {
 
     // IF EX ALUNO HAS AN GUEST, INSERT ON DB
 
-    if (ExAlunoCad.haveGuest) {
+    if (ExAlunoCad.haveGuest === true) {
       const Guest = {
-        name: req.body.nameGuest,
-        rg: req.body.rgGuest,
-        cpf: req.body.cpfGuest,
+        name: req.body.nameGuestForm,
+        rg: req.body.rgGuestForm,
+        cpf: req.body.cpfGuestForm,
         ExAlunoId: ExAlunoIdDb.id,
       };
       await Guests.create(Guest);
@@ -81,7 +79,6 @@ module.exports = class ExAlunoController {
     };
     await Address.create(AddressExAluno)
       .then((result) => {
-        req.flash("message", "Cadastro Concluído com sucesso!");
         res.render("cadastroConcluido");
       })
       .catch((err) => {

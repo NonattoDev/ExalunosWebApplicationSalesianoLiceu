@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+require("dotenv").config();
 
 //
 const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 
 //__________________________
 const expressLayouts = require("express-ejs-layouts");
@@ -25,9 +27,29 @@ app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
 // Sessions
+let options = {
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  createDatabase: true,
+  schema: {
+    tableName: "sessions",
+    columnNames: {
+      session_id: "sessionID",
+      expires: "expires",
+      data: "data",
+    },
+  },
+};
+const sessionStore = new MySQLStore(options);
 app.use(
   session({
     secret: "mySecret__",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
     cookie: {
       secure: false,
       maxAge: 300000,
