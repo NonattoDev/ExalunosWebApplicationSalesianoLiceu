@@ -1,0 +1,192 @@
+<!--Ínicio Formulario Edição EXALUNOS-->
+
+<div class="container">
+  <% if (errors) { %>
+
+  <% errors.forEach(err => { %>
+
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Opss....! </strong> <%= err.msg %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% }) %>
+  <% } %>
+</div>
+<form method="post" action="/admin/dashboard/edit/user/<%= exAlunoData.id %>">
+  <div class=container id="dadosPessoais">
+    <div class="content has-text-centered">
+      <h1 id="endereço" class="title is-4">Dados Pessoais</h1>
+    </div>
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Nome Completo</label>
+          <div class="control has-icons-left">
+            <input class="input " type="text" placeholder="Digite seu nome completo." name="nomeExAluno" id="inputName" value="<%= exAlunoData.name %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-user-alt "></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field ">
+          <label class="label">E-mail</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="email" placeholder="Digite o seu E-mail" name="emailExAluno" id="inputEmail" value="<%= exAlunoData.email %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope "></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">CPF</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" placeholder="000.000.000-00" name="cpfExAluno" maxlength="11" autocomplete="off" id="inputCPF" value="<%= exAlunoData.cpf %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i id="iconCpf" class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">RG</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="Digite seu RG" name="rgExAluno" maxlength="10" id="inputRG" value="<%= exAlunoData.rg %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-card"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fas"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="columns">
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Data de Nascimento</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="date" name="dataDeNascimentoExAluno" id="dataNascimento" value="<%= exAlunoData.birthday %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-birthday-cake"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <div class="field">
+          <label class="label">Ultimo ano na Instituição</label>
+          <div class="control has-icons-left has-icons-right">
+            <input class="input " type="text" name="dataUltimoAnoInstituiçãoExAluno" id="dataUltimoAnoInstituição" maxlength="4" placeholder="0000" value="<%= exAlunoData.formationDate %>" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- ========== Criar form  ========== -->
+
+    <% if (exAlunoData.haveGuest != 0) { %>
+    <div class="content animate__animated " id="guestForm">
+      <div class="columns ">
+        <div class="column hvr-grow"><label class="label" for="nameGuest">Nome Completo</label>
+          <input type="text" name="nameGuestForm" id="nameGuest" class="input" placeholder="Digite o nome do seu convidado" value="<%= exAlunoData['Guest.name'] %>">
+        </div>
+        <div class="column hvr-grow"><label class="label" for="cpfGuest">CPF</label>
+          <input type="text" name="cpfGuestForm" id="cpfGuest" class="input" placeholder="Digite o CPF do seu convidado" value="<%= exAlunoData['Guest.cpf'] %>">
+        </div>
+        <div class="column hvr-grow"> <label class="label" for="rgGuest">RG</label>
+          <input type="text" name="rgGuestForm" id="rgGuest" class="input" placeholder="Digite o RG do seu convidado" value="<%= exAlunoData['Guest.rg'] %>">
+        </div>
+      </div>
+    </div>
+    <hr>
+    <% } %>
+    <!-- ========== End Section ========== -->
+    <!-- Inicio do formulario CEP-->
+    <div class="columns">
+      <div class="column hvr-grow">
+        <form method="get" action=".">
+          <label class="label">Código CEP
+            <input class="input " name="cep" type="text" id="cep" size="10" maxlength="9" onblur="pesquisacep(this.value);" value="<%= exAlunoData['Address.cep']%>" required />
+          </label>
+        </form>
+
+      </div>
+      <div class="column is-0"></div>
+      <div class="column hvr-grow">
+        <label class="label">Cidade
+          <input class="input " name="cidade" type="text" id="cidade" size="40" value="<%= exAlunoData['Address.city']%>" required />
+        </label>
+
+
+      </div>
+    </div>
+    <div class=" columns">
+      <div class="column hvr-grow">
+        <label class="label">Rua
+          <input class="input " name="rua" type="text" id="rua" size="60" value="<%= exAlunoData['Address.street']%>" required /></label>
+      </div>
+      <div class=" column is-0">
+      </div>
+      <div class="column hvr-grow">
+        <label class="label">Estado
+          <input class="input " name="uf" type="text" id="uf" size="2" value="<%= exAlunoData['Address.state']%>"" required /></label>
+        </div>
+      </div>
+      <div class=" columns">
+          <div class="column hvr-grow">
+            <label class="label">Bairro
+              <input class="input " name="bairro" type="text" id="bairro" size="40" value="<%= exAlunoData['Address.neighborhood']%>" required /></label>
+          </div>
+          <div class=" column is-0">
+          </div>
+          <div class="column hvr-grow">
+            <label class="label">Número
+              <input class="input " name="numerocasa" type="text" id="numerocasa" size="2" value="<%= exAlunoData['Address.number']%>" required /></label>
+          </div>
+      </div>
+
+
+      <div class="field is-grouped">
+        <div class="control">
+
+          <input type="submit" class="button is-link hvr-grow hvr-shadow" id="enviar" value="Editar" />
+        </div>
+        <div class="control">
+          <a style="text-decoration: none;" href="/" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
+        </div>
+
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+  </div>
+
+</form>

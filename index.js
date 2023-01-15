@@ -65,6 +65,9 @@ const adminRouter = require("./routes/adminRouter");
 app.use("/", exalunoRouter);
 app.use("/exalunos", exalunoRouter);
 app.use("/admin", adminRouter);
+app.get("*", (req, res) => {
+  res.status(404).render("404", { layout: "layouts/login.ejs" });
+});
 
 connectionDb
   .sync({ force: true })

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 
-const ExAlunos = require("../models/ExAlunos.js");
 
 const ExAlunoController = require("../controllers/ExAlunoController");
 

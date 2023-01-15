@@ -74,11 +74,31 @@
                     <td><%= data.id %> </td>
                     <td><%= data.name %> </td>
                     <td><%= data.cpf %> </td>
-                    <td></td>
+                    <td><%= data['Guest.name'] %> </td>
                     <td><% if (data.isPaid === 0) { %>
-                      Não
-                      <% } %></td>
-                    <td> X Y Z</td>
+                      <i style="color: #A01A01;" class="fa-regular fa-circle-xmark"></i>
+                      <% } else { %>
+                      <i style="color: #39ff07;" class="fa-regular fa-circle-xmark"></i>
+                      <% } %>
+                    </td>
+                    <td>
+                      <form style="display:inline-table ;" action="/admin/dashboard/checkispaid/user/" method="post">
+                        <input type="hidden" name="isPaidId" value="<%= data.isPaid %> ">
+                        <input type="hidden" name="userID" value="<%= data.id %> ">
+                        <button class=" btn"><i style="color: #00F8AE;" class="fa-regular fa-circle-check"></i></button>
+                      </form>
+
+                      <a href="/admin/dashboard/edit/user/<%= data.id %>" class="btn"><i class="fa-solid fa-user-pen"></i></a>
+
+
+                      <form style="display:inline-table ;" action="/admin/dashboard/remove/user" method="post" id="removeUser">
+                        <input type="hidden" name="idToDestroy" value="<%= data.id %>">
+                        <button type="submit" class="btn"><i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </form>
+
+
+                    </td>
                   </tr>
                   <% }) %>
                 </tbody>
@@ -96,7 +116,6 @@
 
   </div>
 </div>
-
 
 <style>
   html,
@@ -191,8 +210,6 @@
     font-weight: 700;
     color: #8F99A3;
   }
-
-  .card-footer-item:hover {}
 
   .card-table .table {
     margin-bottom: 0;
