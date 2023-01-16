@@ -3,6 +3,7 @@ const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
 const dotenv = require("dotenv").config();
 const { validationResult } = require("express-validator");
+const { where } = require("sequelize");
 
 module.exports = class ExAlunoController {
   //! FORMULARIO DE LOGIN
@@ -53,6 +54,7 @@ module.exports = class ExAlunoController {
       include: Guests,
       raw: true,
     });
+    const count = await ExAlunos.count();
     let errors;
     let user = req.session.login;
     return await res.render("admin/dashboard", {
@@ -60,6 +62,7 @@ module.exports = class ExAlunoController {
       user,
       exAlunoData,
       errors: false,
+      count,
     });
   }
 
@@ -143,9 +146,7 @@ module.exports = class ExAlunoController {
     };
 
     await Address.update(AddressExAluno, { where: { ExAlunoId: userID } })
-      .then(() => {
-        console.log("insert successfully");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
@@ -178,16 +179,13 @@ module.exports = class ExAlunoController {
     } else {
       bool = false;
     }
-    console.log(bool);
 
     await ExAlunos.update({ isPaid: bool }, { where: { id: userID } })
-      .then(() => {
-        console.log("Atualizei");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err);
       });
 
-    return res.redirect("/admin/dashboard");
+    return res.redirect("back");
   }
 };

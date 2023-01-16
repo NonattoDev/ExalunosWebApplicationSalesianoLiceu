@@ -1,112 +1,124 @@
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bulma.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#myTable').DataTable();
+  });
+</script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bulma.min.css">
 
 <div class="container">
   <div class="content">
     <!-- END NAV -->
-    <div class="container">
-      <div class="columns">
-        <div class="column">
-          <section class="tablewithborder hero is-info welcome is-small">
-            <div class="hero-body">
-              <div class="container">
-                <h1 class="title">
-                  Olá, <%= user %> !
-                </h1>
-                <h2 class="subtitle">
-                  I hope you are having a great day!
-                </h2>
-              </div>
+
+    <div class="columns">
+      <div class="column">
+        <section class="tablewithborder hero is-info welcome is-small">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                Olá, <%= user %> !
+              </h1>
+              <h2 class="subtitle">
+                I hope you are having a great day!
+              </h2>
             </div>
-          </section>
-          <section class="info-tiles">
-            <div class="tile is-ancestor has-text-centered">
-              <div class="tile is-parent">
-                <article class="tile is-child box">
-                  <p class="title">439k</p>
-                  <p class="subtitle">Users</p>
-                </article>
-              </div>
-              <div class="tile is-parent">
-                <article class="tile is-child box">
-                  <p class="title">59k</p>
-                  <p class="subtitle">Products</p>
-                </article>
-              </div>
-              <div class="tile is-parent">
-                <article class="tile is-child box">
-                  <p class="title">3.4k</p>
-                  <p class="subtitle">Open Orders</p>
-                </article>
-              </div>
-              <div class="tile is-parent">
-                <article class="tile is-child box">
-                  <p class="title">19</p>
-                  <p class="subtitle">Exceptions</p>
-                </article>
-              </div>
+          </div>
+        </section>
+        <section class="info-tiles">
+          <div class="tile is-ancestor has-text-centered">
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title"><%= count %> </p>
+                <p class="subtitle">Ex Alunos Confirmados</p>
+              </article>
             </div>
-
-            <div class="box">
-              <%# <!-- ========== Start Section ========== -->
-                thead the optional top part of the table
-                tfoot the optional bottom part of the table
-                tbody the main content of the table
-                tr each table row
-                th a table cell heading
-                td a table cell
-
-                <!-- ========== End Section ========== --> %>
-              <table class="table">
-
-                <thead>
-                  <th>ID</th>
-                  <th>Nome do Ex aluno</th>
-                  <th>CPF</th>
-                  <th>Nome do Convidado</th>
-                  <th>Pago</th>
-                  <th>Menu de Ações</th>
-                </thead>
-                <tbody>
-
-
-                  <% exAlunoData.forEach(data => { %>
-                  <tr>
-                    <td><%= data.id %> </td>
-                    <td><%= data.name %> </td>
-                    <td><%= data.cpf %> </td>
-                    <td><%= data['Guest.name'] %> </td>
-                    <td><% if (data.isPaid === 0) { %>
-                      <i style="color: #A01A01;" class="fa-regular fa-circle-xmark"></i>
-                      <% } else { %>
-                      <i style="color: #39ff07;" class="fa-regular fa-circle-xmark"></i>
-                      <% } %>
-                    </td>
-                    <td>
-                      <form style="display:inline-table ;" action="/admin/dashboard/checkispaid/user/" method="post">
-                        <input type="hidden" name="isPaidId" value="<%= data.isPaid %> ">
-                        <input type="hidden" name="userID" value="<%= data.id %> ">
-                        <button class=" btn"><i style="color: #00F8AE;" class="fa-regular fa-circle-check"></i></button>
-                      </form>
-
-                      <a href="/admin/dashboard/edit/user/<%= data.id %>" class="btn"><i class="fa-solid fa-user-pen"></i></a>
-
-
-                      <form style="display:inline-table ;" action="/admin/dashboard/remove/user" method="post" id="removeUser">
-                        <input type="hidden" name="idToDestroy" value="<%= data.id %>">
-                        <button type="submit" class="btn"><i class="fa-solid fa-trash-can"></i>
-                        </button>
-                      </form>
-
-
-                    </td>
-                  </tr>
-                  <% }) %>
-                </tbody>
-
-              </table>
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title">59k</p>
+                <p class="subtitle">Products</p>
+              </article>
             </div>
-          </section>
-        </div>
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title">3.4k</p>
+                <p class="subtitle">Open Orders</p>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title">19</p>
+                <p class="subtitle">Exceptions</p>
+              </article>
+            </div>
+          </div>
+
+          <!-- <p class="control has-icons-left">
+              <input type="text" name="search" id="search" class="input" onkeyup="searchByName()" placeholder="Procure pelo Nome">
+              <span class="icon is-small is-left">
+                <i class="fas fa-search"></i>
+              </span>
+            </p> -->
+
+
+
+          <div class="box">
+            <table id="myTable" class="table is-striped" style="width: 100%;">
+              <thead>
+                <th>ID</th>
+                <th>Nome do Ex aluno</th>
+                <th>CPF</th>
+                <th>Nome do Convidado</th>
+                <th>Pago</th>
+                <th>Menu de Ações</th>
+              </thead>
+              <tbody>
+
+
+
+                <% exAlunoData.forEach(data => { %>
+                <tr>
+                  <td><%= data.id %> </td>
+                  <td><%= data.name %> </td>
+                  <td><%= data.cpf %> </td>
+                  <td><%= data['Guest.name'] %> </td>
+                  <td><% if (data.isPaid === 0) { %>
+                    <i style="color: #A01A01;" class="fa-regular fa-circle-xmark"></i>
+                    <% } else { %>
+                    <i style="color: #39ff07;" class="fa-regular fa-circle-xmark"></i>
+                    <% } %>
+                  </td>
+                  <td>
+                    <form style="display:inline-table ;" action="/admin/dashboard/checkispaid/user/" method="post">
+                      <input type="hidden" name="isPaidId" value="<%= data.isPaid %> ">
+                      <input type="hidden" name="userID" value="<%= data.id %> ">
+                      <button class=" btn"><i style="color: #00F8AE;" class="fa-regular fa-circle-check"></i></button>
+                    </form>
+
+                    <a href="/admin/dashboard/edit/user/<%= data.id %>" class="btn"><i class="fa-solid fa-user-pen"></i></a>
+
+
+                    <form style="display:inline-table ;" action="/admin/dashboard/remove/user" method="post" id="removeUser">
+                      <input type="hidden" name="idToDestroy" value="<%= data.id %>">
+                      <button type="submit" class="btn"><i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    </form>
+
+
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+        </section>
+
       </div>
     </div>
 
@@ -116,6 +128,38 @@
 
   </div>
 </div>
+
+<script>
+  // const searchInput = document.getElementById("search")
+  // const rows = document.querySelectorAll("tbody tr")
+  // const tds = document.querySelectorAll("td")
+
+  function searchByName() {
+    // const q = e.target.value.toLowerCase();
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+    // rows.forEach(row => {
+
+    //   row.querySelectorAll("td")[1].textContent.toLocaleLowerCase().startsWith(q) ? row.style.display = '' : row.style.display = 'none'
+
+    // })
+  }
+</script>
 
 <style>
   html,

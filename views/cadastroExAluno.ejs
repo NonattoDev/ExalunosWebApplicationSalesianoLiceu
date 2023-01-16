@@ -1,5 +1,11 @@
-<!--Ínicio Formulario Dados Pessoais-->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function onSubmit(token) {
+    document.getElementById("formExAluno").submit();
+  }
+</script>
 
+<!--Painel para erros-->
 <div class="container">
   <% if (errors) { %>
 
@@ -13,8 +19,9 @@
   <% } %>
 </div>
 
+<!--Ínicio Formulario Dados Pessoais-->
 
-<form action="/exalunos/form" method="post">
+<form id="formExAluno" action="/exalunos/form" method="post">
 
   <div class=container id="dadosPessoais">
 
@@ -265,23 +272,30 @@
         </div>
 
 
-        <div class="field is-grouped">
-          <div class="control">
+      </div>
+      <br>
 
-            <input type="submit" class="button is-link hvr-grow hvr-shadow" id="enviar" value="Enviar" />
-          </div>
-          <div class="control">
-            <a style="text-decoration: none;" href="/" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
-          </div>
 
+      <div class="field is-grouped">
+
+
+
+        <div class="control">
+
+          <button class="g-recaptcha button is-link hvr-grow hvr-shadow" data-sitekey="6Lef9P4jAAAAAMFptUVEJ1ot1zj425ITpqhddEhP" data-callback="onSubmit">Enviar</button>
+        </div>
+        <div class="control">
+          <a style="text-decoration: none;" href="/" class="button is-link is-light hvr-grow hvr-shadow">Cancelar</a>
         </div>
 
-
-
-
-
       </div>
+
+
+
+
+
     </div>
+  </div>
   </div>
 
 </form>

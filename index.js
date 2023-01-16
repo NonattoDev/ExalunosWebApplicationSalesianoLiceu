@@ -70,7 +70,7 @@ app.get("*", (req, res) => {
 });
 
 connectionDb
-  .sync({ force: true })
+  .sync()
   .then((result) => {
     console.log("Connection established");
     app.listen(port, () => {
