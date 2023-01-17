@@ -3,7 +3,6 @@ const Address = require("../models/Address.js");
 const Guests = require("../models/Guests.js");
 const dotenv = require("dotenv").config();
 const { validationResult } = require("express-validator");
-const { where } = require("sequelize");
 
 module.exports = class ExAlunoController {
   //! FORMULARIO DE LOGIN
@@ -54,7 +53,27 @@ module.exports = class ExAlunoController {
       include: Guests,
       raw: true,
     });
-    const count = await ExAlunos.count();
+
+    const countAllNotPaidWithoutGuest = await ExAlunos.count({
+      where: { haveGuest: false },
+    });
+    const countAllNotPaidWithGuest =
+      (await ExAlunos.count({
+        where: { haveGuest: true },
+      })) * 2;
+
+    const countAll = countAllNotPaidWithoutGuest + countAllNotPaidWithGuest;
+
+    const countWithoutGuests = await ExAlunos.count({
+      where: { isPaid: true, haveGuest: false },
+    });
+    const countWithGuests =
+      (await ExAlunos.count({
+        where: { isPaid: true, haveGuest: true },
+      })) * 2;
+
+    let count = countWithoutGuests + countWithGuests;
+
     let errors;
     let user = req.session.login;
     return await res.render("admin/dashboard", {
@@ -63,6 +82,7 @@ module.exports = class ExAlunoController {
       exAlunoData,
       errors: false,
       count,
+      countAll,
     });
   }
 
